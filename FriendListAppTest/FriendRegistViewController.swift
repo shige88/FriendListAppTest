@@ -1,0 +1,127 @@
+//
+//  FirstViewController.swift
+//  FriendListAppTest
+//
+//  Created by 滋野靖之 on 2017/09/23.
+//  Copyright © 2017年 Alternated. All rights reserved.
+//
+
+import UIKit
+
+//class A:B->クラスAはBのデリゲートを批准する。(Bが誰かに"処理してほしい"ことをAが"自分がやります”と宣言)
+//例えば、UIImagePickerControllerでは画像をカメラロールから選んだ直後の処理（表示するなど）はプログラマーの意志に委ねたい。(imagePickerControllerが相当。メソッド名変更不可)
+class FriendRegistViewController:UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate{
+    
+    
+    
+    //画像を表示するビュー
+    
+    @IBOutlet weak var SampleImageView: UIImageView!
+    
+    @IBOutlet weak var GenderType: UISegmentedControl!
+    
+    @IBOutlet weak var Name: UITextField!
+    @IBOutlet weak var Other1: UITextField!
+    @IBOutlet weak var Other2: UITextField!
+    
+    @IBAction func getText(_ sender: UITextField) {
+    }
+    
+    
+    // カメラロールから写真を選択する処理
+    @IBAction func choosePicture(_ sender: Any) {
+        // カメラロールが利用可能か？
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            // 写真を選ぶビュー
+            let pickerView = UIImagePickerController()
+            // 写真の選択元をカメラロールにする
+            // 「.camera」にすればカメラを起動できる
+            pickerView.sourceType = .photoLibrary
+            // デリゲート。処理の委託先を指定。
+            pickerView.delegate = self
+            // ビューに表示
+            self.present(pickerView, animated: true)
+        }
+    }
+    
+    
+
+    // 写真を選んだ後に呼ばれる処理
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        // 選択した写真を取得する
+        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        // ビューに表示する
+        self.SampleImageView.image = image
+        // 写真を選ぶビューを引っ込める
+        self.dismiss(animated: true)
+    }
+    func clearForm(){
+        self.GenderType.selectedSegmentIndex=0
+        self.Name.text=""
+        self.Other1.text=""
+        self.Other2.text=""
+    }
+    
+    func registRealm(){
+        let dao = RealmBaseDao<FriendObject>()
+        let id = dao.newId()!
+        var gender="M"
+        if (self.GenderType.selectedSegmentIndex == 0){
+            gender="M"
+        }else{
+            gender="F"
+        }
+        let name=self.Name.text!
+        let other1=self.Other1.text!
+        let other2=self.Other2.text!
+        let image=SampleImageView.image!
+        
+        let newFriend = FriendObject()
+        newFriend.id=id
+        newFriend.gender=gender
+        newFriend.name=name
+        newFriend.other1=other1
+        newFriend.other2=other2
+        newFriend.image=ConvertImageToData(image:image)!
+        dao.add(d: newFriend)
+        
+    }
+    
+    
+    
+    @IBAction func Regist(_ sender: Any) {
+        let alert: UIAlertController = UIAlertController(title: "アラート表示", message: "保存してもいいですか？", preferredStyle:  UIAlertControllerStyle.alert)
+        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler:{
+            // ボタンが押された時の処理を書く（クロージャ実装）
+            (action: UIAlertAction!) -> Void in
+            print("OK")
+            self.registRealm()
+            self.clearForm()
+        })
+        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertActionStyle.cancel, handler:{
+            // ボタンが押された時の処理を書く（クロージャ実装）
+            (action: UIAlertAction!) -> Void in
+            print("Cancel")
+        })
+        alert.addAction(cancelAction)
+        alert.addAction(defaultAction)
+        
+        // ④ Alertを表示
+        present(alert, animated: true, completion: nil)
+    }
+    
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // FirstViewがインスタンスとして生成された時に実行される(初回のみ)
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // メモリが圧迫された(システムが警告を発した)時に実行される。具体的には、オブジェクトの解放など。
+    }
+
+
+}
+
