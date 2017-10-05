@@ -16,9 +16,8 @@ import RealmSwift
 //!strとしてアンラップする。（文字列型に戻す）
 //宣言時にlet str:String!としていた場合は、呼び出す時に!をつける必要がない
 class FriendListViewController: UIViewController ,UITableViewDelegate, UITableViewDataSource{
-    
+    var friendID:Int?
     @IBOutlet weak var FriendListView: UITableView!
-   
     //変数FriendObjectsを呼び出すと、DBからFriendObjectの一覧がResults型で返される
     var FriendObjects:Results<FriendObject>?{
         do{
@@ -31,16 +30,29 @@ class FriendListViewController: UIViewController ,UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return FriendObjects!.count
     }
+
     //セルに値を設定する
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // セルを取得する
-        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath)
-        
-        // セルに表示する値を設定する.今回は名前
+        let cell:FriendTableViewCell=tableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath) as! FriendTableViewCell
+        cell.id=FriendObjects![indexPath.row].id
         cell.textLabel!.text = "  "+FriendObjects![indexPath.row].name
         let FriendImage=ConvertDataToImage(data: FriendObjects![indexPath.row].image)
         cell.imageView?.image = FriendImage?.ResizeÜIImage(width: 80, height: 80)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView,didSelectRowAt indexPath: IndexPath) {
+        let cell=tableView.cellForRow(at: indexPath) as! FriendTableViewCell
+        self.friendID=cell.id!
+        checkFriend(id: self.friendID!)
+        performSegue(withIdentifier: "goDetail", sender:nil)
+    }
+    //senderはuiパーツの種別が格納される。（それ以外はダメ）
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier=="goDetail"){
+            let NextVC:FriendDetailViewController=(segue.destination as! FriendDetailViewController)
+            NextVC.id=friendID!
+        }
     }
     
 

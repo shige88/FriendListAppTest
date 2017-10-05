@@ -17,6 +17,12 @@ public func ConvertDataToImage(data:NSData)->UIImage?{
     let image:UIImage?=UIImage(data:data as Data)
     return image
 }
+public func checkFriend(id:Int){
+    let dao=RealmBaseDao<FriendObject>()
+    let friend=dao.find(key: id as AnyObject)
+    print("[frindid]:"+String(describing: friend?.id))
+    print("[frindname]:"+(friend?.name)!)
+}
 extension UIImage{
     // Resizeするクラスメソッド.
     func ResizeÜIImage(width : CGFloat, height : CGFloat)-> UIImage!{
@@ -32,3 +38,6 @@ extension UIImage{
     }
     
 }
+
+
+

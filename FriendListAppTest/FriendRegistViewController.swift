@@ -15,11 +15,9 @@ class FriendRegistViewController:UIViewController,UIImagePickerControllerDelegat
     
     
     //画像を表示するビュー
-    
+    var registImage:UIImage?
     @IBOutlet weak var SampleImageView: UIImageView!
-    
-    @IBOutlet weak var GenderType: UISegmentedControl!
-    
+    @IBOutlet weak var GenderType: UISegmentedControl!    
     @IBOutlet weak var Name: UITextField!
     @IBOutlet weak var Other1: UITextField!
     @IBOutlet weak var Other2: UITextField!
@@ -52,6 +50,7 @@ class FriendRegistViewController:UIViewController,UIImagePickerControllerDelegat
         let image = info[UIImagePickerControllerOriginalImage] as! UIImage
         // ビューに表示する
         self.SampleImageView.image = image
+        self.registImage=image
         // 写真を選ぶビューを引っ込める
         self.dismiss(animated: true)
     }
@@ -64,25 +63,16 @@ class FriendRegistViewController:UIViewController,UIImagePickerControllerDelegat
     
     func registRealm(){
         let dao = RealmBaseDao<FriendObject>()
-        let id = dao.newId()!
-        var gender="M"
-        if (self.GenderType.selectedSegmentIndex == 0){
-            gender="M"
-        }else{
-            gender="F"
-        }
-        let name=self.Name.text!
-        let other1=self.Other1.text!
-        let other2=self.Other2.text!
-        let image=SampleImageView.image!
-        
         let newFriend = FriendObject()
-        newFriend.id=id
-        newFriend.gender=gender
-        newFriend.name=name
-        newFriend.other1=other1
-        newFriend.other2=other2
-        newFriend.image=ConvertImageToData(image:image)!
+        newFriend.gender="M"
+        if (self.GenderType.selectedSegmentIndex != 0) {
+            newFriend.gender="F"
+        }
+        newFriend.id=dao.newId()!
+        newFriend.name=self.Name.text!
+        newFriend.other1=self.Other1.text!
+        newFriend.other2=self.Other2.text!
+        newFriend.image=ConvertImageToData(image:self.registImage!)!
         dao.add(d: newFriend)
         
     }
@@ -105,8 +95,6 @@ class FriendRegistViewController:UIViewController,UIImagePickerControllerDelegat
         })
         alert.addAction(cancelAction)
         alert.addAction(defaultAction)
-        
-        // ④ Alertを表示
         present(alert, animated: true, completion: nil)
     }
     
