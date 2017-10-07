@@ -40,6 +40,7 @@ class FriendDetailViewController: UIViewController {
                 let defaultAction: UIAlertAction = UIAlertAction(title: "編集", style: UIAlertActionStyle.default, handler:{
                     (action: UIAlertAction!) -> Void in
                     print("編集")
+                    self.performSegue(withIdentifier: "goRemake", sender: nil)
                 })
                 let defaultAction2: UIAlertAction = UIAlertAction(title: "削除", style: UIAlertActionStyle.default, handler:{
                     (action: UIAlertAction!) -> Void in
