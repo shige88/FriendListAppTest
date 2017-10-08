@@ -38,6 +38,11 @@ extension UIImage{
     }
     
 }
+func getFriend(id:Int)->FriendObject{
+    let dao=RealmBaseDao<FriendObject>()
+    let friend=dao.find(key:id as AnyObject)
+    return friend!
+}
 
 
 

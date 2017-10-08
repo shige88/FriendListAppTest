@@ -79,7 +79,7 @@ class FriendRegistViewController:UIViewController,UIImagePickerControllerDelegat
     
     
     
-    @IBAction func Regist(_ sender: Any) {
+    @IBAction func registBtn(_ sender: Any) {
         let alert: UIAlertController = UIAlertController(title: "アラート表示", message: "保存してもいいですか？", preferredStyle:  UIAlertControllerStyle.alert)
         let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler:{
             // ボタンが押された時の処理を書く（クロージャ実装）

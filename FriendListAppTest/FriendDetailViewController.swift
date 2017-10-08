@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class FriendDetailViewController: UIViewController {
 
@@ -14,13 +15,16 @@ class FriendDetailViewController: UIViewController {
     
     
     //モーダルビューの場合はexitにつなげても戻れない。
-    @IBAction func closeWindow(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: true, completion: nil)
-
-    }
+//    @IBAction func closeWindow(_ sender: UIBarButtonItem) {
+//        self.dismiss(animated: true, completion: nil)
+//
+//    }
     
-    var id=0
+    var friend:FriendObject?
     var str=""
+    
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         FriendImageView.isUserInteractionEnabled=true
@@ -40,7 +44,7 @@ class FriendDetailViewController: UIViewController {
                 let defaultAction: UIAlertAction = UIAlertAction(title: "編集", style: UIAlertActionStyle.default, handler:{
                     (action: UIAlertAction!) -> Void in
                     print("編集")
-                    self.performSegue(withIdentifier: "goRemake", sender: nil)
+                    self.performSegue(withIdentifier: "goEdit", sender: nil)
                 })
                 let defaultAction2: UIAlertAction = UIAlertAction(title: "削除", style: UIAlertActionStyle.default, handler:{
                     (action: UIAlertAction!) -> Void in
@@ -62,9 +66,16 @@ class FriendDetailViewController: UIViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier=="goEdit"){
+            let NextVC:FriendEditViewController=(segue.destination as! FriendEditViewController)
+            NextVC.friend=self.friend!
+            NextVC.FriendImageView=self.FriendImageView
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
-        let dao=RealmBaseDao<FriendObject>()
-        let friend=dao.find(key: self.id as AnyObject)
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self as? UIGestureRecognizerDelegate;
         FriendImageView.image=ConvertDataToImage(data: (friend!.image))!
         str="[氏名]:" + friend!.name + "\n" +
             "[性別]:" + friend!.gender + "\n" +

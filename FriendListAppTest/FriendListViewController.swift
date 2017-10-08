@@ -16,7 +16,7 @@ import RealmSwift
 //!strとしてアンラップする。（文字列型に戻す）
 //宣言時にlet str:String!としていた場合は、呼び出す時に!をつける必要がない
 class FriendListViewController: UIViewController ,UITableViewDelegate, UITableViewDataSource{
-    var friendID:Int?
+    var selectedFriend:FriendObject?
     @IBOutlet weak var FriendListView: UITableView!
     //変数FriendObjectsを呼び出すと、DBからFriendObjectの一覧がResults型で返される
     var FriendObjects:Results<FriendObject>?{
@@ -43,15 +43,15 @@ class FriendListViewController: UIViewController ,UITableViewDelegate, UITableVi
     
     func tableView(_ tableView: UITableView,didSelectRowAt indexPath: IndexPath) {
         let cell=tableView.cellForRow(at: indexPath) as! FriendTableViewCell
-        self.friendID=cell.id!
-        checkFriend(id: self.friendID!)
+        self.selectedFriend=getFriend(id: cell.id!)
+//        checkFriend(id: self.friendID!)
         performSegue(withIdentifier: "goDetail", sender:nil)
     }
     //senderはuiパーツの種別が格納される。（それ以外はダメ）
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier=="goDetail"){
             let NextVC:FriendDetailViewController=(segue.destination as! FriendDetailViewController)
-            NextVC.id=friendID!
+            NextVC.friend=self.selectedFriend
         }
     }
     

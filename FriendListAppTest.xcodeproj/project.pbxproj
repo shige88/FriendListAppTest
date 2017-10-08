@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		511E853E1F87D890000C6B87 /* FriendUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511E853D1F87D890000C6B87 /* FriendUpdateViewController.swift */; };
+		511E853E1F87D890000C6B87 /* FriendEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511E853D1F87D890000C6B87 /* FriendEditViewController.swift */; };
 		512307491F7BEC0200AC6949 /* FriendDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512307481F7BEC0200AC6949 /* FriendDetailViewController.swift */; };
 		518136D81F7696C8009EEA42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518136D71F7696C8009EEA42 /* AppDelegate.swift */; };
 		518136DA1F7696C8009EEA42 /* FriendRegistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518136D91F7696C8009EEA42 /* FriendRegistViewController.swift */; };
@@ -59,7 +59,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		511E853D1F87D890000C6B87 /* FriendUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendUpdateViewController.swift; sourceTree = "<group>"; };
+		511E853D1F87D890000C6B87 /* FriendEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendEditViewController.swift; sourceTree = "<group>"; };
 		512307481F7BEC0200AC6949 /* FriendDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailViewController.swift; sourceTree = "<group>"; };
 		518136D41F7696C8009EEA42 /* FriendListAppTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FriendListAppTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		518136D71F7696C8009EEA42 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -141,7 +141,7 @@
 				518136DB1F7696C8009EEA42 /* FriendListViewController.swift */,
 				519CB3961F7D4306000A4B52 /* FriendTableViewCell.swift */,
 				512307481F7BEC0200AC6949 /* FriendDetailViewController.swift */,
-				511E853D1F87D890000C6B87 /* FriendUpdateViewController.swift */,
+				511E853D1F87D890000C6B87 /* FriendEditViewController.swift */,
 				518136DD1F7696C8009EEA42 /* Main.storyboard */,
 				518136E01F7696C8009EEA42 /* Assets.xcassets */,
 				518136E21F7696C8009EEA42 /* LaunchScreen.storyboard */,
@@ -323,7 +323,7 @@
 			files = (
 				518136DC1F7696C8009EEA42 /* FriendListViewController.swift in Sources */,
 				5183C1411F7945050018B6AC /* SampleLibrary.swift in Sources */,
-				511E853E1F87D890000C6B87 /* FriendUpdateViewController.swift in Sources */,
+				511E853E1F87D890000C6B87 /* FriendEditViewController.swift in Sources */,
 				518136D81F7696C8009EEA42 /* AppDelegate.swift in Sources */,
 				518136DA1F7696C8009EEA42 /* FriendRegistViewController.swift in Sources */,
 				5183C13B1F77C0250018B6AC /* FriendListDB.swift in Sources */,
@@ -501,7 +501,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = FriendListAppTest/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Alternated.FriendListAppTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -521,7 +521,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = FriendListAppTest/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Alternated.FriendListAppTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
