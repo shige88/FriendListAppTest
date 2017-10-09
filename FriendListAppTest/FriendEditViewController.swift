@@ -26,7 +26,8 @@ class FriendEditViewController: UIViewController {
     @IBOutlet weak var Other1: UITextField!
     
     @IBOutlet weak var Other2: UITextField!
-    
+    @IBAction func getText(_ sender: UITextField) {
+    }
     
     
     override func viewDidLoad() {
