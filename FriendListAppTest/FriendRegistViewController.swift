@@ -99,6 +99,9 @@ class FriendRegistViewController:UIViewController,UIImagePickerControllerDelegat
     }
     
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.registImage=self.SampleImageView.image
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

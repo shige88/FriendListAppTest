@@ -15,6 +15,7 @@ import RealmSwift
 //オプショナル型であるため、文字列として操作できない。そこで、呼び出す際は、
 //!strとしてアンラップする。（文字列型に戻す）
 //宣言時にlet str:String!としていた場合は、呼び出す時に!をつける必要がない
+
 class FriendListViewController: UIViewController ,UITableViewDelegate, UITableViewDataSource{
     var selectedFriend:FriendObject?
     @IBOutlet weak var FriendListView: UITableView!
@@ -41,12 +42,29 @@ class FriendListViewController: UIViewController ,UITableViewDelegate, UITableVi
         return cell
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        
+        if(editingStyle == UITableViewCellEditingStyle.delete) {
+            do{
+                let dao=RealmBaseDao<FriendObject>()
+                dao.delete(d: FriendObjects![indexPath.row])
+                tableView.deleteRows(at: [indexPath as IndexPath], with: UITableViewRowAnimation.fade)
+            }catch{
+            }
+            tableView.reloadData()
+        }
+    }
+
+    
     func tableView(_ tableView: UITableView,didSelectRowAt indexPath: IndexPath) {
         let cell=tableView.cellForRow(at: indexPath) as! FriendTableViewCell
         self.selectedFriend=getFriend(id: cell.id!)
 //        checkFriend(id: self.friendID!)
         performSegue(withIdentifier: "goDetail", sender:nil)
     }
+    
+    
     //senderはuiパーツの種別が格納される。（それ以外はダメ）
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier=="goDetail"){

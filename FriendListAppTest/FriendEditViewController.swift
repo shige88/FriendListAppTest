@@ -35,17 +35,31 @@ class FriendEditViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     func editRealm(){
-        let dao=RealmBaseDao<FriendObject>()
-        self.friend!.image=ConvertImageToData(image: self.FriendImageView.image!)!
-        self.friend!.name=self.Name.text!
-        self.friend!.other1=self.Other1.text!
-        self.friend!.other2=self.Other2.text!
+        //        self.friend!.image=ConvertImageToData(image: self.FriendImageView.image!)!
+        print(self.friend!.id)
+        let updateFriend=FriendObject()
+        updateFriend.id=self.friend!.id
+        updateFriend.name=self.Name.text!
+        updateFriend.other1=self.Other1.text!
+        updateFriend.other2=self.Other2.text!
+        updateFriend.gender="M"
+        updateFriend.image=self.friend!.image
+        if (self.GenderType.selectedSegmentIndex==1){
+            updateFriend.gender="F"
+        }
+//        self.friend!.name=self.Name.text!
+//        self.friend!.other1=self.Other1.text!
+//        self.friend!.other2=self.Other2.text!
 //        newFriend.image=ConvertImageToData(image:self.registImage!)!
-        let _ = dao.update(d: self.friend!)
+        let dao=RealmBaseDao<FriendObject>()
+
+        let _ = dao.update(d: updateFriend)
         
     }
   
     @IBAction func editBtn(_ sender: Any) {
+        self.editRealm()
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,6 +71,8 @@ class FriendEditViewController: UIViewController {
         self.Name.text=self.friend!.name
         self.Other1.text=self.friend!.other1
         self.Other2.text=self.friend!.other2
+        
+
     }
     
     override func didReceiveMemoryWarning() {
